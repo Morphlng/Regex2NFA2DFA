@@ -1,0 +1,2 @@
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Debug\Regex2NFA2DFA.exe
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Debug\Regex2NFA2DFA.pdb

@@ -1,0 +1,6 @@
+﻿  Regex2NFA.cpp
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA.cpp(39,16): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA.cpp(83,16): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA.cpp(156,16): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA.cpp(277,16): warning C4018: “<”: 有符号/无符号不匹配
+  Regex2NFA2DFA.vcxproj -> D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Debug\Regex2NFA2DFA.exe
