@@ -140,11 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Regex2NFA.cpp" />
+    <ClCompile Include="Regex2NFA2DFA.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFA.h" />
-    <ClInclude Include="Regex2NFA.h" />
+    <ClInclude Include="Regex2NFA2DFA.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
