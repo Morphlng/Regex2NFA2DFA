@@ -2,7 +2,7 @@
 
 int main()
 {
-	#pragma region 正规式生成NFA
+	#pragma region 姝ｈ寮忕敓鎴怤FA
 	string regex = input_regex();
 	cout << "regex:" << regex << endl;
 	string separated_regex = add_separation(regex);
@@ -19,7 +19,7 @@ int main()
 	// cout << nfa << endl << endl;
 	#pragma endregion
 	
-	#pragma region NFA转DFA
+	#pragma region NFA杞珼FA
 	
 	Matrix dfa;
 	dfa = NFA2DFA(nfa);
@@ -27,7 +27,7 @@ int main()
 	
 	#pragma endregion
 
-	#pragma region DFA最小化
+	#pragma region DFA鏈�灏忓寲
 
 	Matrix dfa_m;
 	dfa_m = DFA_minimize(dfa);

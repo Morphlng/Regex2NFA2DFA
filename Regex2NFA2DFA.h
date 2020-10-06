@@ -4,37 +4,37 @@
 using namespace std;
 
 /// <summary>
-/// ¸ÃÍ·ÎÄ¼ş±¾´ÎÊµÑéµÄº¯Êı¶¨Òå
-/// 1¡¢Õı¹æÊ½Éú³ÉNFA
-/// 2¡¢NFAÈ·¶¨»¯
-/// 3¡¢DFA×îĞ¡»¯
+/// è¯¥å¤´æ–‡ä»¶æœ¬æ¬¡å®éªŒçš„å‡½æ•°å®šä¹‰
+/// 1ã€æ­£è§„å¼ç”ŸæˆNFA
+/// 2ã€NFAç¡®å®šåŒ–
+/// 3ã€DFAæœ€å°åŒ–
 /// </summary>
 
-#pragma region ÊäÈëÕı¹æÊ½
-// ÊäÈëÕı¹æÊ½
+#pragma region è¾“å…¥æ­£è§„å¼
+// è¾“å…¥æ­£è§„å¼
 string input_regex();
 
-// ¼ì²éÊäÈëµÄÕı¹æÊ½ÊÇ·ñºÏ·¨
+// æ£€æŸ¥è¾“å…¥çš„æ­£è§„å¼æ˜¯å¦åˆæ³•
 bool check_legal(string regex);
 
-// ¼ì²éÕı¹æÊ½ÊÇ·ñÓĞ·Ç·¨×Ö·û
+// æ£€æŸ¥æ­£è§„å¼æ˜¯å¦æœ‰éæ³•å­—ç¬¦
 bool check_character(string regex);
 
-// ¼ì²éÕı¹æÊ½µÄÀ¨ºÅ±ÕºÏ
+// æ£€æŸ¥æ­£è§„å¼çš„æ‹¬å·é—­åˆ
 bool check_parenthesis(string regex);
 
-// ÊÇ·ñÊÇºÏ·¨×Ö·û
+// æ˜¯å¦æ˜¯åˆæ³•å­—ç¬¦
 bool is_letter(char c);
 
-// ÊÇ·ñÊÇÔËËã·û
+// æ˜¯å¦æ˜¯è¿ç®—ç¬¦
 bool is_operator(char c);
 #pragma endregion
 
-#pragma region ÖĞ×º×ªºó×º
-// ÎªÖĞ×º±í´ïÊ½Ìí¼Ó·Ö¸ô·û(¡®+¡¯)
+#pragma region ä¸­ç¼€è½¬åç¼€
+// ä¸ºä¸­ç¼€è¡¨è¾¾å¼æ·»åŠ åˆ†éš”ç¬¦(â€˜+â€™)
 string add_separation(string regex);
 
-// ÖĞ×º±í´ïÊ½×ªºó×º±í´ïÊ½
+// ä¸­ç¼€è¡¨è¾¾å¼è½¬åç¼€è¡¨è¾¾å¼
 string to_postfix(string regex);
 
 // isp
@@ -44,71 +44,71 @@ int isp(char c);
 int icp(char c);
 #pragma endregion
 
-#pragma region Õı¹æÊ½Éú³ÉNFA
-// Õı¹æÊ½Éú³Énfa
+#pragma region æ­£è§„å¼ç”ŸæˆNFA
+// æ­£è§„å¼ç”Ÿæˆnfa
 cell regex_to_nfa(string regex);
 
-// ³õÊ¼»¯½Úµã
-// Ö÷ÒªÓÃÓÚ¸ù¾İ¶ÁÈë×Ö·ûÉú³ÉÒ»¸ö½Úµã
+// åˆå§‹åŒ–èŠ‚ç‚¹
+// ä¸»è¦ç”¨äºæ ¹æ®è¯»å…¥å­—ç¬¦ç”Ÿæˆä¸€ä¸ªèŠ‚ç‚¹
 cell init_cell(char ch);
 
-// »òÔËËã(a|b)
+// æˆ–è¿ç®—(a|b)
 cell unite_cell(cell Left, cell Right);
 
-// ÓëÔËËã(ab)
+// ä¸è¿ç®—(ab)
 cell join_cell(cell Left, cell Right);
 
-// ±Õ°üÔËËã(a*)
+// é—­åŒ…è¿ç®—(a*)
 cell loop_cell(cell Left);
 
-// ½«c2ÖĞµÄ±ß¿½±´µ½c1
+// å°†c2ä¸­çš„è¾¹æ‹·è´åˆ°c1
 void copy_cell(cell& c1, cell c2);
 
-// ÖØÔØÊä³öcell;
+// é‡è½½è¾“å‡ºcell;
 ostream& operator<<(ostream& out, const cell& nfa);
 
-// ½«NFA_cell×ªÎª¾ØÕóĞÎÊ½
+// å°†NFA_cellè½¬ä¸ºçŸ©é˜µå½¢å¼
 Matrix cell2matrix(cell nfa_cell);
 
-// ÕÒµ½½ÚµãÔÚ¾ØÕóÃû³ÆÖĞµÄÎ»ÖÃ£¬·µ»ØÏÂ±ê
+// æ‰¾åˆ°èŠ‚ç‚¹åœ¨çŸ©é˜µåç§°ä¸­çš„ä½ç½®ï¼Œè¿”å›ä¸‹æ ‡
 int find_index_in_vertex(Matrix matrix, char ch);
 
-// ÖØÔØÊä³ömatrix;
+// é‡è½½è¾“å‡ºmatrix;
 ostream& operator<<(ostream& out, const Matrix& nfa);
 #pragma endregion
 
 #pragma region NFA2DFA
 
-// ½«¾ØÕóĞÎÊ½×ª»»ÎªcellĞÎÊ½
+// å°†çŸ©é˜µå½¢å¼è½¬æ¢ä¸ºcellå½¢å¼
 cell matrix2cell(Matrix nfa);
 
-// ½«NFA_cell×ª»»ÎªDFA_cell
+// å°†NFA_cellè½¬æ¢ä¸ºDFA_cell
 Matrix NFA2DFA(Matrix nfa);
 
-// ·µ»ØÒ»¸ö½Úµã¾­¹ı×ª»»×Ö·û×ª»»µÃµ½µÄ½á¹û
+// è¿”å›ä¸€ä¸ªèŠ‚ç‚¹ç»è¿‡è½¬æ¢å­—ç¬¦è½¬æ¢å¾—åˆ°çš„ç»“æœ
 set<char> transfer_result(Matrix nfa, char start, char transchar);
 
-// ·µ»ØÒ»¸ö½ÚµãµÄ¦Å±Õ°ü
+// è¿”å›ä¸€ä¸ªèŠ‚ç‚¹çš„Îµé—­åŒ…
 set<char> e_closure(Matrix nfa, char ch);
 
-// ½«Á½¸ö¼¯ºÏºÏ²¢
+// å°†ä¸¤ä¸ªé›†åˆåˆå¹¶
 set<char> union_set(set<char>s1, set<char>s2);
 
-// ÅĞ¶ÏÁ½¸ö¼¯ºÏÊÇ·ñÏàÍ¬
+// åˆ¤æ–­ä¸¤ä¸ªé›†åˆæ˜¯å¦ç›¸åŒ
 bool equal_set(set<char> s1, set<char> s2);
 #pragma endregion
 
-#pragma region DFA×îĞ¡»¯
+#pragma region DFAæœ€å°åŒ–
 
-// DFA×îĞ¡»¯
+// DFAæœ€å°åŒ–
 Matrix DFA_minimize(Matrix dfa);
 
-// ³õÊ¼»¯Ò»¸ö½«½Úµã·ÖÎª¡°ÖÕ½á¼¯¡±ºÍ¡°·ÇÖÕ½á¼¯¡±µÄÈİÆ÷
+// åˆå§‹åŒ–ä¸€ä¸ªå°†èŠ‚ç‚¹åˆ†ä¸ºâ€œç»ˆç»“é›†â€å’Œâ€œéç»ˆç»“é›†â€çš„å®¹å™¨
 vector<set<char>> init_groups(Matrix dfa);
 
-// ´Ó¡°ÖÕ½á¼¯¡±ºÍ¡°·ÇÖÕ½á¼¯¡±¿ªÊ¼£¬½øĞĞ·Ö×é
+// ä»â€œç»ˆç»“é›†â€å’Œâ€œéç»ˆç»“é›†â€å¼€å§‹ï¼Œè¿›è¡Œåˆ†ç»„
 vector<set<char>> grouping(Matrix dfa, vector<set<char>> groups);
 
-// ÅĞ¶Ïs2ÊÇ·ñÊÇs1×Ó¼¯
+// åˆ¤æ–­s2æ˜¯å¦æ˜¯s1å­é›†
 bool sub_set(set<char> s1, set<char> s2);
 #pragma endregion

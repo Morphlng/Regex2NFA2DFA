@@ -5,19 +5,19 @@
 using namespace std;
 
 /// <summary>
-/// ¸ÃÔ´ÎÄ¼şÊµÏÖÁËÊµÑéÒ»µÄº¯Êı
-/// 1¡¢Õı¹æÊ½Éú³ÉNFA
-/// 2¡¢NFAÈ·¶¨»¯
-/// 3¡¢DFA×îĞ¡»¯
+/// è¯¥æºæ–‡ä»¶å®ç°äº†å®éªŒä¸€çš„å‡½æ•°
+/// 1ã€æ­£è§„å¼ç”ŸæˆNFA
+/// 2ã€NFAç¡®å®šåŒ–
+/// 3ã€DFAæœ€å°åŒ–
 /// </summary>
 
-#pragma region ÊäÈëÕı¹æÊ½
+#pragma region è¾“å…¥æ­£è§„å¼
 
-// ÊäÈëÕı¹æÊ½
+// è¾“å…¥æ­£è§„å¼
 string input_regex()
 {
 	string regex;
-	cout << "ÇëÊäÈëÕıÔò±í´ïÊ½£º  £¨²Ù×÷·û£º() * |;×Ö·û¼¯£ºa~z A~Z£©" << endl;
+	cout << "è¯·è¾“å…¥æ­£åˆ™è¡¨è¾¾å¼ï¼š  ï¼ˆæ“ä½œç¬¦ï¼š() * |;å­—ç¬¦é›†ï¼ša~z A~Zï¼‰" << endl;
 	do
 	{
 		cin >> regex;
@@ -26,7 +26,7 @@ string input_regex()
 	return regex;
 }
 
-// ¼ì²éÊäÈëµÄÕı¹æÊ½ÊÇ·ñºÏ·¨
+// æ£€æŸ¥è¾“å…¥çš„æ­£è§„å¼æ˜¯å¦åˆæ³•
 bool check_legal(string regex)
 {
 	if (check_character(regex) && check_parenthesis(regex))
@@ -36,7 +36,7 @@ bool check_legal(string regex)
 	return false;
 }
 
-// ¼ì²éÕı¹æÊ½ÊÇ·ñÓĞ·Ç·¨×Ö·û
+// æ£€æŸ¥æ­£è§„å¼æ˜¯å¦æœ‰éæ³•å­—ç¬¦
 bool check_character(string regex)
 {
 	int i;
@@ -44,22 +44,22 @@ bool check_character(string regex)
 	{
 		if (is_letter(regex[i]))
 		{
-			// cout << "ÊÇ×Ö·û" << endl;
+			// cout << "æ˜¯å­—ç¬¦" << endl;
 		}
 		else if (is_operator(regex[i]))
 		{
-			// cout << "ÊÇ·ûºÅ" << endl;
+			// cout << "æ˜¯ç¬¦å·" << endl;
 		}
 		else
 		{
-			cerr << "ÊäÈëº¬²»ºÏ·¨µÄ×Ö·û£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+			cerr << "è¾“å…¥å«ä¸åˆæ³•çš„å­—ç¬¦ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
 			return false;
 		}
 	}
 	return true;
 }
 
-// ÊÇ·ñÊÇºÏ·¨×Ö·û
+// æ˜¯å¦æ˜¯åˆæ³•å­—ç¬¦
 bool is_letter(char c)
 {
 	if (((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')))
@@ -69,7 +69,7 @@ bool is_letter(char c)
 	return false;
 }
 
-// ÊÇ·ñÊÇÔËËã·û
+// æ˜¯å¦æ˜¯è¿ç®—ç¬¦
 bool is_operator(char c)
 {
 	if (c == '(' || c == ')' || c == '*' || c == '|' || c == '+')
@@ -79,7 +79,7 @@ bool is_operator(char c)
 	return false;
 }
 
-// ¼ì²éÕı¹æÊ½µÄÀ¨ºÅ±ÕºÏ
+// æ£€æŸ¥æ­£è§„å¼çš„æ‹¬å·é—­åˆ
 bool check_parenthesis(string regex)
 {
 	stack<int> s;
@@ -94,7 +94,7 @@ bool check_parenthesis(string regex)
 		{
 			if (s.empty())
 			{
-				cerr << "ÓĞ¶àÓàµÄÓÒÀ¨ºÅ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+				cerr << "æœ‰å¤šä½™çš„å³æ‹¬å·ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
 				return false;
 			}
 			else
@@ -103,7 +103,7 @@ bool check_parenthesis(string regex)
 	}
 	if (!s.empty())
 	{
-		cerr << "ÓĞ¶àÓàµÄ×óÀ¨ºÅ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+		cerr << "æœ‰å¤šä½™çš„å·¦æ‹¬å·ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
 		return false;
 	}
 	return true;
@@ -111,20 +111,20 @@ bool check_parenthesis(string regex)
 
 #pragma endregion
 
-#pragma region ÔËËã·ûÓÅÏÈ¼¶¶¨Òå
+#pragma region è¿ç®—ç¬¦ä¼˜å…ˆçº§å®šä¹‰
 
 /*
-¹¹ÔìÓÅÏÈ¼¶±í¹æÔò£º£¨1£©ÏÈÀ¨ºÅÄÚ£¬ÔÙÀ¨ºÅÍâ£»£¨2£©ÓÅÏÈ¼¶ÓÉ¸ßµ½µÍ£º±Õ°ü¡¢|¡¢+£»£¨3£©Í¬¼¶±ğ£¬ÏÈ×óºóÓÒ¡£
-ÓÅÏÈ¼¶±í£º
+æ„é€ ä¼˜å…ˆçº§è¡¨è§„åˆ™ï¼šï¼ˆ1ï¼‰å…ˆæ‹¬å·å†…ï¼Œå†æ‹¬å·å¤–ï¼›ï¼ˆ2ï¼‰ä¼˜å…ˆçº§ç”±é«˜åˆ°ä½ï¼šé—­åŒ…ã€|ã€+ï¼›ï¼ˆ3ï¼‰åŒçº§åˆ«ï¼Œå…ˆå·¦åå³ã€‚
+ä¼˜å…ˆçº§è¡¨ï¼š
 	 #	(	*	|	+	)
 isp  0	1	7	5	3	8
 icp	 0	8	6	4	2	1
 
-isp: in stack priority£¬Õ»ÄÚÓÅÏÈ¼¶
-icp£ºin coming priority£¬ÈëÕ»ÓÅÏÈ¼¶
+isp: in stack priorityï¼Œæ ˆå†…ä¼˜å…ˆçº§
+icpï¼šin coming priorityï¼Œå…¥æ ˆä¼˜å…ˆçº§
 */
 
-/*********************ÔËËã·ûÓÅÏÈ¼¶¹ØÏµ±í********************/
+/*********************è¿ç®—ç¬¦ä¼˜å…ˆçº§å…³ç³»è¡¨********************/
 /*
 	c1\c2	(	*	|	+	)	#
 
@@ -141,20 +141,20 @@ icp£ºin coming priority£¬ÈëÕ»ÓÅÏÈ¼¶
 	#		<	<	<	<	<	=
 */
 
-// ÉÏ±íÒâË¼Îª£ºc1 _(<|>|=) c2
+// ä¸Šè¡¨æ„æ€ä¸ºï¼šc1 _(<|>|=) c2
 
 /***********************************************************/
 
 #pragma endregion
 
-#pragma region ÖĞ×º×ªºó×º
+#pragma region ä¸­ç¼€è½¬åç¼€
 
-// ¾ÙÀı£º
-// ÖĞ×º£ºa(a|b)*((ab)|c)*
-// ¶ÔÖĞ×º×ö·Ö¸ô´¦Àí£ºa+(a|b)*+((a+b)|c)*£¬·½±ã¸ÄÎªºó×º±í´ïÊ½£¨Í¬Ê±Ò²Ïû½âÁË(ab)µÄÆçÒåÎÊÌâ£©
-// ºó×º£ºaab|*+ab+c|*+
+// ä¸¾ä¾‹ï¼š
+// ä¸­ç¼€ï¼ša(a|b)*((ab)|c)*
+// å¯¹ä¸­ç¼€åšåˆ†éš”å¤„ç†ï¼ša+(a|b)*+((a+b)|c)*ï¼Œæ–¹ä¾¿æ”¹ä¸ºåç¼€è¡¨è¾¾å¼ï¼ˆåŒæ—¶ä¹Ÿæ¶ˆè§£äº†(ab)çš„æ­§ä¹‰é—®é¢˜ï¼‰
+// åç¼€ï¼šaab|*+ab+c|*+
 
-// ÎªÖĞ×º±í´ïÊ½Ìí¼Ó·Ö¸ô·û(¡®+¡¯)
+// ä¸ºä¸­ç¼€è¡¨è¾¾å¼æ·»åŠ åˆ†éš”ç¬¦(â€˜+â€™)
 string add_separation(string regex)
 {
 	char* result = new char[2 * regex.length() + 1];
@@ -165,32 +165,32 @@ string add_separation(string regex)
 		p = regex[i-1];
 		c = regex[i];
 		result[index++] = p;
-		// ÏÂÃæ¿ªÊ¼·ÖÇé¿öÌí¼Ó¡®+¡¯
-		// 1¡¢ÈôcÊÇ×ÖÄ¸¡¢p²»ÊÇ'('¡¢'|'¶¼ÒªÌí¼Ó
+		// ä¸‹é¢å¼€å§‹åˆ†æƒ…å†µæ·»åŠ â€˜+â€™
+		// 1ã€è‹¥cæ˜¯å­—æ¯ã€pä¸æ˜¯'('ã€'|'éƒ½è¦æ·»åŠ 
 		if (p != '(' && p != '|' && is_letter(c))
 		{
 			result[index++] = '+';
 		}
-		// 2¡¢ÈôcÊÇ'(',p²»ÊÇ'|'¡¢'(',Ò²Òª¼Ó
+		// 2ã€è‹¥cæ˜¯'(',pä¸æ˜¯'|'ã€'(',ä¹Ÿè¦åŠ 
 		else if (c == '(' && p != '|' && p != '(')
 		{
 			result[index++] = '+';
 		}
 	}
-	result[index++] = c;	// °Ñ×îºóÒ»¸ö×Ö·û¼ÓÉÏ
+	result[index++] = c;	// æŠŠæœ€åä¸€ä¸ªå­—ç¬¦åŠ ä¸Š
 	result[index] = '\0';
 	return string(result);
 }
 
-// ÖĞ×º±í´ïÊ½×ªºó×º±í´ïÊ½ 
+// ä¸­ç¼€è¡¨è¾¾å¼è½¬åç¼€è¡¨è¾¾å¼ 
 string to_postfix(string regex)
 {
-	regex += "#";						// ¸ø´ı×ª»»ÖĞ×º±í´ïÊ½¼ÓÈëÖÕÖ¹·û'#'
-	int i = 0, index = 0, count = 0;	// countµÄ×÷ÓÃÊÇÔÚ½áÎ²¼ÓÈë'\0'
+	regex += "#";						// ç»™å¾…è½¬æ¢ä¸­ç¼€è¡¨è¾¾å¼åŠ å…¥ç»ˆæ­¢ç¬¦'#'
+	int i = 0, index = 0, count = 0;	// countçš„ä½œç”¨æ˜¯åœ¨ç»“å°¾åŠ å…¥'\0'
 	char ch = regex[index++], op;
-	char* result = new char[regex.length()];	// ½á¹û×Ö·û´®
+	char* result = new char[regex.length()];	// ç»“æœå­—ç¬¦ä¸²
 	stack<char> s;
-	s.push('#');	// ¿ªÊ¼·ûÈëÕ»
+	s.push('#');	// å¼€å§‹ç¬¦å…¥æ ˆ
 	while (!s.empty())
 	{
 		if (is_letter(ch))
@@ -202,21 +202,21 @@ string to_postfix(string regex)
 		else
 		{
 			op = s.top();
-			if (isp(op) < icp(ch))			// Èç¹ûÕ»ÄÚÓÅÏÈ¼¶Ğ¡ÓÚÈëÕ»ÓÅÏÈ¼¶£¬Ôò½øÕ»
+			if (isp(op) < icp(ch))			// å¦‚æœæ ˆå†…ä¼˜å…ˆçº§å°äºå…¥æ ˆä¼˜å…ˆçº§ï¼Œåˆ™è¿›æ ˆ
 			{
 				s.push(ch);
 				ch = regex[index++];
 			}
-			else if (isp(op) > icp(ch))		// Èç¹ûÕ»ÄÚÓÅÏÈ¼¶´óÓÚÈëÕ»ÓÅÏÈ¼¶£¬ÔòÍËÕ»²¢¼ÓÈë½á¹û
+			else if (isp(op) > icp(ch))		// å¦‚æœæ ˆå†…ä¼˜å…ˆçº§å¤§äºå…¥æ ˆä¼˜å…ˆçº§ï¼Œåˆ™é€€æ ˆå¹¶åŠ å…¥ç»“æœ
 			{
 				result[i++] = op;
 				count++;
 				s.pop();
 			}
-			else                            // Èç¹ûÕ»ÄÚÓÅÏÈ¼¶µÈÓÚÈëÕ»ÓÅÏÈ¼¶£¬ÔòÍËÕ»£¬µ«²»¼ÓÈë½á¹û
+			else                            // å¦‚æœæ ˆå†…ä¼˜å…ˆçº§ç­‰äºå…¥æ ˆä¼˜å…ˆçº§ï¼Œåˆ™é€€æ ˆï¼Œä½†ä¸åŠ å…¥ç»“æœ
 			{
 				s.pop();
-				// ÓÅÏÈ¼¶ÏàµÈµÄÇé¿öÖ»ÓĞ'#'-'#'£¬'('-')'£¬¶øÖ»ÓĞÕ»¶¥Îª'('¶ÁÈë')'Ê±²Å²»ÊÇÖÕÖ¹×´Ì¬
+				// ä¼˜å…ˆçº§ç›¸ç­‰çš„æƒ…å†µåªæœ‰'#'-'#'ï¼Œ'('-')'ï¼Œè€Œåªæœ‰æ ˆé¡¶ä¸º'('è¯»å…¥')'æ—¶æ‰ä¸æ˜¯ç»ˆæ­¢çŠ¶æ€
 				if (op == '(')
 				{
 					ch = regex[index++];
@@ -264,23 +264,23 @@ int icp(char c)
 
 #pragma endregion
 
-#pragma region Õı¹æÊ½-NFA
+#pragma region æ­£è§„å¼-NFA
 
-// ²ÉÓÃThompsonËã·¨¹¹½¨Õû¸öNFA£¬
-// ¶Ô²»Í¬µÄ²Ù×÷·û£¬ĞèÒª²»Í¬ÊıÁ¿µÄÔËËãÊı£¬Òò´Ëa|b¡¢ab¡¢a*¡¢a²Ù×÷Ğè·Ö±ğÓÃº¯ÊıÊµÏÖ
+// é‡‡ç”¨Thompsonç®—æ³•æ„å»ºæ•´ä¸ªNFAï¼Œ
+// å¯¹ä¸åŒçš„æ“ä½œç¬¦ï¼Œéœ€è¦ä¸åŒæ•°é‡çš„è¿ç®—æ•°ï¼Œå› æ­¤a|bã€abã€a*ã€aæ“ä½œéœ€åˆ†åˆ«ç”¨å‡½æ•°å®ç°
 
-char STATE_NAME = 65;	// ¶¨ÒåNFAÖĞ½ÚµãµÄÃû³Æ£¬´ÓA¿ªÊ¼
+char STATE_NAME = 65;	// å®šä¹‰NFAä¸­èŠ‚ç‚¹çš„åç§°ï¼Œä»Aå¼€å§‹
 
 cell regex_to_nfa(string regex)
 {
 	int i, flag = 0;
 	char ch;
-	set<char> transchar;		// ¼ÇÂ¼×ª»»×Ö·û 
+	set<char> transchar;		// è®°å½•è½¬æ¢å­—ç¬¦ 
 	cell NFA, Cell, Left, Right;
-	// NFA£º×îÖÕ½á¹û
-	// Cell£ºÁÙÊ±±äÁ¿
-	// Left£º×ó²Ù×÷·û
-	// Right£ºÓÒ²Ù×÷·û
+	// NFAï¼šæœ€ç»ˆç»“æœ
+	// Cellï¼šä¸´æ—¶å˜é‡
+	// Leftï¼šå·¦æ“ä½œç¬¦
+	// Rightï¼šå³æ“ä½œç¬¦
 	stack<cell> s;
 	for (i = 0; i < regex.length(); i++)
 	{
@@ -319,18 +319,18 @@ cell regex_to_nfa(string regex)
 			Cell = init_cell(ch);
 			s.push(Cell);
 			if (ch != '#')
-				transchar.insert(ch);	// set»áÊ×ÏÈ¼ì²âÊÇ·ñ´æÔÚ£¬Ö»ÓĞµ±²»´æÔÚÊ±²Å»á²åÈë
+				transchar.insert(ch);	// setä¼šé¦–å…ˆæ£€æµ‹æ˜¯å¦å­˜åœ¨ï¼Œåªæœ‰å½“ä¸å­˜åœ¨æ—¶æ‰ä¼šæ’å…¥
 			break;
 		}
 	}
 	NFA = s.top();
 	s.pop();
 	NFA.transchar = transchar;
-	STATE_NAME = 65;	// ½«¼ÆÊıÆ÷ÖØÖÃ£¬·½±ãÔÙ´Îµ÷ÓÃ
+	STATE_NAME = 65;	// å°†è®¡æ•°å™¨é‡ç½®ï¼Œæ–¹ä¾¿å†æ¬¡è°ƒç”¨
 	return NFA;
 }
 
-// ³õÊ¼»¯½Úµã
+// åˆå§‹åŒ–èŠ‚ç‚¹
 cell init_cell(char ch)
 {
 	edge newEdge;
@@ -346,9 +346,9 @@ cell init_cell(char ch)
 	return newCell;
 }
 
-// »òÔËËã(a|b)
-// Ò»¹²ĞèÒªÌí¼ÓÁ½¸ö½Úµã£¬ËÄÌõ±ß
-// ĞÂ¿ªÊ¼½ÚµãÖ¸ÏòLeft/Right¿ªÊ¼½Úµã£¬Left/RightÖÕÖ¹½ÚµãÖ¸ÏòĞÂÖÕÖ¹½Úµã
+// æˆ–è¿ç®—(a|b)
+// ä¸€å…±éœ€è¦æ·»åŠ ä¸¤ä¸ªèŠ‚ç‚¹ï¼Œå››æ¡è¾¹
+// æ–°å¼€å§‹èŠ‚ç‚¹æŒ‡å‘Left/Rightå¼€å§‹èŠ‚ç‚¹ï¼ŒLeft/Rightç»ˆæ­¢èŠ‚ç‚¹æŒ‡å‘æ–°ç»ˆæ­¢èŠ‚ç‚¹
 cell unite_cell(cell Left, cell Right)
 {
 	cell newCell;
@@ -359,31 +359,31 @@ cell unite_cell(cell Left, cell Right)
 	newCell.EndNodeSet.push_back(newEnd);
 
 	edge edge1, edge2, edge3, edge4;
-	// ĞÂ¿ªÊ¼½ÚµãÖ¸ÏòLeft¿ªÊ¼½Úµã
+	// æ–°å¼€å§‹èŠ‚ç‚¹æŒ‡å‘Leftå¼€å§‹èŠ‚ç‚¹
 	edge1.Start = newCell.StartNode;
 	edge1.End = Left.StartNode;
 	edge1.transchar = '#';
 
-	// ĞÂ¿ªÊ¼½ÚµãÖ¸ÏòRight¿ªÊ¼½Úµã
+	// æ–°å¼€å§‹èŠ‚ç‚¹æŒ‡å‘Rightå¼€å§‹èŠ‚ç‚¹
 	edge2.Start = newCell.StartNode;
 	edge2.End = Right.StartNode;
 	edge2.transchar = '#';
 
-	// LeftÖÕÖ¹½ÚµãÖ¸ÏòĞÂÖÕÖ¹½Úµã
+	// Leftç»ˆæ­¢èŠ‚ç‚¹æŒ‡å‘æ–°ç»ˆæ­¢èŠ‚ç‚¹
 	edge3.Start = Left.EndNodeSet[0];
 	edge3.End = newCell.EndNodeSet[0];
 	edge3.transchar = '#';
 
-	// LeftÖÕÖ¹½ÚµãÖ¸ÏòĞÂÖÕÖ¹½Úµã
+	// Leftç»ˆæ­¢èŠ‚ç‚¹æŒ‡å‘æ–°ç»ˆæ­¢èŠ‚ç‚¹
 	edge4.Start = Right.EndNodeSet[0];
 	edge4.End = newCell.EndNodeSet[0];
 	edge4.transchar = '#';
 
-	// ½«LeftºÍRightµÄEdgeSet¸´ÖÆµ½NewCell
+	// å°†Leftå’ŒRightçš„EdgeSetå¤åˆ¶åˆ°NewCell
 	copy_cell(newCell, Left);
 	copy_cell(newCell, Right);
 
-	// ½«ĞÂÔöµÄ±ß¼ÓÈë
+	// å°†æ–°å¢çš„è¾¹åŠ å…¥
 	newCell.EdgeSet[newCell.EdgeCount++] = edge1;
 	newCell.EdgeSet[newCell.EdgeCount++] = edge2;
 	newCell.EdgeSet[newCell.EdgeCount++] = edge3;
@@ -392,18 +392,18 @@ cell unite_cell(cell Left, cell Right)
 	return newCell;
 }
 
-// ÓëÔËËã(a+b)
-// LeftµÄ½áÊø×´Ì¬ÓëRightµÄ¿ªÊ¼×´Ì¬ºÏ²¢
+// ä¸è¿ç®—(a+b)
+// Leftçš„ç»“æŸçŠ¶æ€ä¸Rightçš„å¼€å§‹çŠ¶æ€åˆå¹¶
 cell join_cell(cell Left, cell Right)
 {
-	// ÎÒÃÇĞèÒª½«ËÄ¸ö½ÚµãºÏ²¢³ÉÈı¸ö(A-a-B£¬C-b-D ¡ú A-a-B-b-D)
-	// ¼´LeftµÄ½áÊø×´Ì¬ºÍRightµÄ¿ªÊ¼×´Ì¬ºÏ²¢£¬²¢½«RightÖĞÆäËûµÄ±ß¸´ÖÆ¸øLeft£¬×îºó·µ»ØLeft
+	// æˆ‘ä»¬éœ€è¦å°†å››ä¸ªèŠ‚ç‚¹åˆå¹¶æˆä¸‰ä¸ª(A-a-Bï¼ŒC-b-D â†’ A-a-B-b-D)
+	// å³Leftçš„ç»“æŸçŠ¶æ€å’ŒRightçš„å¼€å§‹çŠ¶æ€åˆå¹¶ï¼Œå¹¶å°†Rightä¸­å…¶ä»–çš„è¾¹å¤åˆ¶ç»™Leftï¼Œæœ€åè¿”å›Left
 	
 	int i;
-	// Ê×ÏÈ×öºÏ²¢´¦Àí
+	// é¦–å…ˆåšåˆå¹¶å¤„ç†
 	for (i = 0; i < Right.EdgeCount; i++)
 	{
-		// RightµÄ¿ªÊ¼×´Ì¬ÓëLeftµÄ½áÊø×´Ì¬ºÏ²¢
+		// Rightçš„å¼€å§‹çŠ¶æ€ä¸Leftçš„ç»“æŸçŠ¶æ€åˆå¹¶
 		if (Right.EdgeSet[i].Start.Name == Right.StartNode.Name)
 		{
 			Right.EdgeSet[i].Start = Left.EndNodeSet[0];
@@ -415,7 +415,7 @@ cell join_cell(cell Left, cell Right)
 			// STATE_NAME--;
 		}
 
-		// ½«RightµÄÖÕÖ¹½áµãÇ°ÒÆ
+		// å°†Rightçš„ç»ˆæ­¢ç»“ç‚¹å‰ç§»
 		if (Right.EdgeSet[i].End.Name == Right.EndNodeSet[0].Name)
 		{
 			Right.EdgeSet[i].End.Name -= 1;
@@ -429,16 +429,16 @@ cell join_cell(cell Left, cell Right)
 	Right.EndNodeSet[0].Name -= 1;
 	STATE_NAME--;
 
-	// È»ºó×ö±ß¸´ÖÆµÄ²Ù×÷
+	// ç„¶ååšè¾¹å¤åˆ¶çš„æ“ä½œ
 	copy_cell(Left, Right);
 
 	Left.EndNodeSet = Right.EndNodeSet;
 	return Left;
 }
 
-// ±Õ°üÔËËã(a*)
-// Ò»¹²ĞèÒªÌí¼ÓÁ½¸ö½Úµã£¬ËÄÌõ±ß¡£
-// ĞÂ¿ªÊ¼½ÚµãÖ¸ÏòÔ­¿ªÊ¼½áµã£¬Ô­ÖÕÖ¹½áµãÖ¸ÏòĞÂÖÕÖ¹½Úµã£¬Ô­ÖÕÖ¹½ÚµãÖ¸ÏòÔ­¿ªÊ¼½ÚµãµÄ±ß£¬ĞÂ¿ªÊ¼½áµãÖ¸ÏòĞÂÖÕÖ¹½Úµã
+// é—­åŒ…è¿ç®—(a*)
+// ä¸€å…±éœ€è¦æ·»åŠ ä¸¤ä¸ªèŠ‚ç‚¹ï¼Œå››æ¡è¾¹ã€‚
+// æ–°å¼€å§‹èŠ‚ç‚¹æŒ‡å‘åŸå¼€å§‹ç»“ç‚¹ï¼ŒåŸç»ˆæ­¢ç»“ç‚¹æŒ‡å‘æ–°ç»ˆæ­¢èŠ‚ç‚¹ï¼ŒåŸç»ˆæ­¢èŠ‚ç‚¹æŒ‡å‘åŸå¼€å§‹èŠ‚ç‚¹çš„è¾¹ï¼Œæ–°å¼€å§‹ç»“ç‚¹æŒ‡å‘æ–°ç»ˆæ­¢èŠ‚ç‚¹
 cell loop_cell(cell Left)
 {
 	cell newCell;
@@ -449,29 +449,29 @@ cell loop_cell(cell Left)
 	newCell.EndNodeSet.push_back(newEnd);
 
 	edge edge1, edge2, edge3, edge4;
-	// ĞÂ¿ªÊ¼½ÚµãÖ¸ÏòÔ­¿ªÊ¼½áµã
+	// æ–°å¼€å§‹èŠ‚ç‚¹æŒ‡å‘åŸå¼€å§‹ç»“ç‚¹
 	edge1.Start = newCell.StartNode;
 	edge1.End = Left.StartNode;
 	edge1.transchar = '#';
 
-	// Ô­ÖÕÖ¹½áµãÖ¸ÏòĞÂÖÕÖ¹½Úµã
+	// åŸç»ˆæ­¢ç»“ç‚¹æŒ‡å‘æ–°ç»ˆæ­¢èŠ‚ç‚¹
 	edge2.Start = Left.EndNodeSet[0];
 	edge2.End = newCell.EndNodeSet[0];
 	edge2.transchar = '#';
 
-	// Ô­ÖÕÖ¹½ÚµãÖ¸ÏòÔ­¿ªÊ¼½ÚµãµÄ±ß
+	// åŸç»ˆæ­¢èŠ‚ç‚¹æŒ‡å‘åŸå¼€å§‹èŠ‚ç‚¹çš„è¾¹
 	edge3.Start = Left.EndNodeSet[0];
 	edge3.End = Left.StartNode;
 	edge3.transchar = '#';
 
-	// ĞÂ¿ªÊ¼½áµãÖ¸ÏòĞÂÖÕÖ¹½Úµã
+	// æ–°å¼€å§‹ç»“ç‚¹æŒ‡å‘æ–°ç»ˆæ­¢èŠ‚ç‚¹
 	edge4.Start = newCell.StartNode;
 	edge4.End = newCell.EndNodeSet[0];
 	edge4.transchar = '#';
 
-	// ½«Ô­À´µÄ±ß¸´ÖÆ¹ıÀ´
+	// å°†åŸæ¥çš„è¾¹å¤åˆ¶è¿‡æ¥
 	copy_cell(newCell, Left);
-	// Ìí¼ÓĞÂÔöµÄËÄÌõ±ß
+	// æ·»åŠ æ–°å¢çš„å››æ¡è¾¹
 	newCell.EdgeSet[newCell.EdgeCount++] = edge1;
 	newCell.EdgeSet[newCell.EdgeCount++] = edge2;
 	newCell.EdgeSet[newCell.EdgeCount++] = edge3;
@@ -480,7 +480,7 @@ cell loop_cell(cell Left)
 	return newCell;
 }
 
-// ½«c2ÖĞµÄ±ß¿½±´µ½c1
+// å°†c2ä¸­çš„è¾¹æ‹·è´åˆ°c1
 void copy_cell(cell &c1, cell c2)
 {
 	int i;
@@ -491,20 +491,20 @@ void copy_cell(cell &c1, cell c2)
 	c1.EdgeCount += c2.EdgeCount;
 }
 
-// ÖØÔØÊä³öcell
+// é‡è½½è¾“å‡ºcell
 ostream& operator<<(ostream& out, const cell& nfa)
 {
 	int i;
-	out << "×Ô¶¯»úM µÄ±ßÊı£º" << nfa.EdgeCount << endl;
-	out << "×Ô¶¯»úM µÄÆğÊ¼×´Ì¬£º" << nfa.StartNode.Name << endl;
-	out << "×Ô¶¯»úM µÄ½áÊø×´Ì¬£º";
+	out << "è‡ªåŠ¨æœºM çš„è¾¹æ•°ï¼š" << nfa.EdgeCount << endl;
+	out << "è‡ªåŠ¨æœºM çš„èµ·å§‹çŠ¶æ€ï¼š" << nfa.StartNode.Name << endl;
+	out << "è‡ªåŠ¨æœºM çš„ç»“æŸçŠ¶æ€ï¼š";
 	vector<node>::const_iterator node_iter;
 	for (node_iter = nfa.EndNodeSet.begin(); node_iter != nfa.EndNodeSet.end(); node_iter++)
 	{
 		out << (*node_iter).Name << " ";
 	}
 	out << endl;
-	out << "×Ô¶¯»úM µÄ×ª»»×Ö·û¼¯ÓĞ:";
+	out << "è‡ªåŠ¨æœºM çš„è½¬æ¢å­—ç¬¦é›†æœ‰:";
 	set<char>::iterator transchar_iter;
 	for (transchar_iter = nfa.transchar.begin(); transchar_iter != nfa.transchar.end(); transchar_iter++)
 	{
@@ -514,16 +514,16 @@ ostream& operator<<(ostream& out, const cell& nfa)
 
 	for (i = 0; i < nfa.EdgeCount; i++)
 	{
-		out << "µÚ" << i + 1 << "Ìõ±ßµÄÆğÊ¼×´Ì¬£º" << nfa.EdgeSet[i].Start.Name
-			<< "  ½áÊø×´Ì¬£º" << nfa.EdgeSet[i].End.Name
-			<< "  ×ª»»·û£º" << nfa.EdgeSet[i].transchar << endl;
+		out << "ç¬¬" << i + 1 << "æ¡è¾¹çš„èµ·å§‹çŠ¶æ€ï¼š" << nfa.EdgeSet[i].Start.Name
+			<< "  ç»“æŸçŠ¶æ€ï¼š" << nfa.EdgeSet[i].End.Name
+			<< "  è½¬æ¢ç¬¦ï¼š" << nfa.EdgeSet[i].transchar << endl;
 	}
-	out << "½áÊø" << endl;
+	out << "ç»“æŸ" << endl;
 
 	return out;
 }
 
-// ½«cell×ªÎª¾ØÕóĞÎÊ½
+// å°†cellè½¬ä¸ºçŸ©é˜µå½¢å¼
 Matrix cell2matrix(cell nfa_cell)
 {
 	int i, j;
@@ -539,16 +539,16 @@ Matrix cell2matrix(cell nfa_cell)
 		}
 	}
 
-	matrix.nodeCount = maxName - 65 + 1;	// Í³¼Æ×ÖÄ¸ÊıÁ¿
+	matrix.nodeCount = maxName - 65 + 1;	// ç»Ÿè®¡å­—æ¯æ•°é‡
 	
-	// ³õÊ¼»¯¾ØÕó½ÚµãÃû³Æ
+	// åˆå§‹åŒ–çŸ©é˜µèŠ‚ç‚¹åç§°
 	matrix.vertex = new char[matrix.nodeCount];
 	for (i = matrix.nodeCount - 1, j = 65; i >= 0; i--,j--)
 	{
 		matrix.vertex[i] = char(j + matrix.nodeCount - 1);
 	}
 
-	// ³õÊ¼»¯¶şÎ¬¾ØÕó
+	// åˆå§‹åŒ–äºŒç»´çŸ©é˜µ
 	matrix.transet = new string* [matrix.nodeCount];
 	for (i = 0; i < matrix.nodeCount; i++)
 	{
@@ -558,7 +558,7 @@ Matrix cell2matrix(cell nfa_cell)
 	{
 		for (j = 0; j < matrix.nodeCount; j++)
 		{
-			matrix.transet[i][j] = '$';	// '$'±íÊ¾ÎŞÊı¾İ
+			matrix.transet[i][j] = '$';	// '$'è¡¨ç¤ºæ— æ•°æ®
 		}
 	}
 	matrix.StartNode = nfa_cell.StartNode;
@@ -589,7 +589,7 @@ Matrix cell2matrix(cell nfa_cell)
 	return matrix;
 }
 
-// ÕÒµ½½ÚµãÔÚ¾ØÕóÃû³ÆÖĞµÄÎ»ÖÃ£¬·µ»ØÏÂ±ê
+// æ‰¾åˆ°èŠ‚ç‚¹åœ¨çŸ©é˜µåç§°ä¸­çš„ä½ç½®ï¼Œè¿”å›ä¸‹æ ‡
 int find_index_in_vertex(Matrix matrix, char ch)
 {
 	int i;
@@ -603,20 +603,20 @@ int find_index_in_vertex(Matrix matrix, char ch)
 	return -1;
 }
 
-// ÖØÔØÊä³ömatrix;
+// é‡è½½è¾“å‡ºmatrix;
 ostream& operator<<(ostream& out, const Matrix& nfa)
 {
 	int i = 0, j, count = 0;
-	out << "×Ô¶¯»úM µÄ±ßÊı£º" << nfa.edgeCount << endl;
-	out << "×Ô¶¯»úM µÄÆğÊ¼×´Ì¬£º" << nfa.StartNode.Name << endl;
-	out << "×Ô¶¯»úM µÄ½áÊø×´Ì¬£º";
+	out << "è‡ªåŠ¨æœºM çš„è¾¹æ•°ï¼š" << nfa.edgeCount << endl;
+	out << "è‡ªåŠ¨æœºM çš„èµ·å§‹çŠ¶æ€ï¼š" << nfa.StartNode.Name << endl;
+	out << "è‡ªåŠ¨æœºM çš„ç»“æŸçŠ¶æ€ï¼š";
 	vector<node>::const_iterator node_iter;
 	for (node_iter = nfa.EndNodeSet.begin(); node_iter != nfa.EndNodeSet.end(); node_iter++)
 	{
 		out << (*node_iter).Name << " ";
 	}
 	out << endl;
-	out << "×Ô¶¯»úM µÄ×ª»»×Ö·û¼¯ÓĞ:" << endl;
+	out << "è‡ªåŠ¨æœºM çš„è½¬æ¢å­—ç¬¦é›†æœ‰:" << endl;
 	set<char>::iterator iter;
 	for (iter = nfa.transchar.begin(); iter != nfa.transchar.end(); iter++)
 	{
@@ -647,7 +647,7 @@ ostream& operator<<(ostream& out, const Matrix& nfa)
 		out << endl;
 	}
 
-	out << "½áÊø" << endl;
+	out << "ç»“æŸ" << endl;
 
 	return out;
 }
@@ -655,7 +655,7 @@ ostream& operator<<(ostream& out, const Matrix& nfa)
 
 #pragma region NFA-DFA
 
-// ½«¾ØÕóĞÎÊ½×ª»»ÎªcellĞÎÊ½
+// å°†çŸ©é˜µå½¢å¼è½¬æ¢ä¸ºcellå½¢å¼
 cell matrix2cell(Matrix nfa)
 {
 	cell newCell;
@@ -686,35 +686,35 @@ cell matrix2cell(Matrix nfa)
 	return newCell;
 }
 
-// ½«NFA_matrix×ª»»ÎªDFA_matrix
+// å°†NFA_matrixè½¬æ¢ä¸ºDFA_matrix
 Matrix NFA2DFA(Matrix nfa)
 {
 	Matrix dfa;
 	vector<set<char>> Q;
 
-	// ÎÒÃÇÓ¦ÔÚQ¼¯ºÏÖĞÔªËØÊıÁ¿²»ÔÙ±ä»¯Ê±Í£Ö¹Ñ­»·£¬ÔËÓÃÒ»¸ö¶ÓÁĞ½á¹¹À´ÊµÏÖ
+	// æˆ‘ä»¬åº”åœ¨Qé›†åˆä¸­å…ƒç´ æ•°é‡ä¸å†å˜åŒ–æ—¶åœæ­¢å¾ªç¯ï¼Œè¿ç”¨ä¸€ä¸ªé˜Ÿåˆ—ç»“æ„æ¥å®ç°
 	queue<set<char>> s;
-	// ³õÊ¼Ê±½«¿ªÊ¼½ÚµãµÄ¦Å±Õ°üÈë¶ÓÁĞ
+	// åˆå§‹æ—¶å°†å¼€å§‹èŠ‚ç‚¹çš„Îµé—­åŒ…å…¥é˜Ÿåˆ—
 	s.push(e_closure(nfa,nfa.StartNode.Name));
 	Q.push_back(e_closure(nfa, nfa.StartNode.Name));
 
-	// ÁíÍâ×îºÃÄÜ±£´æ×ª»»½á¹û£¬ÕâÀïÓÃÒ»¸ö¶ÓÁĞÀ´Íê³É
+	// å¦å¤–æœ€å¥½èƒ½ä¿å­˜è½¬æ¢ç»“æœï¼Œè¿™é‡Œç”¨ä¸€ä¸ªé˜Ÿåˆ—æ¥å®Œæˆ
 	queue<set<char>> trans_edge;
 
-	// ×Ó¼¯·¨»ñÈ¡ĞÂ½Úµã
+	// å­é›†æ³•è·å–æ–°èŠ‚ç‚¹
 	while (!s.empty())
 	{
-		set<char> top = s.front();		// È¡³ö¶ÓÊ×¼¯ºÏ
+		set<char> top = s.front();		// å–å‡ºé˜Ÿé¦–é›†åˆ
 		s.pop();
 
-		// ¶ÔÃ¿Ò»¸ö×ª»»×Ö·û£¬Çó×ª»»½á¹û
+		// å¯¹æ¯ä¸€ä¸ªè½¬æ¢å­—ç¬¦ï¼Œæ±‚è½¬æ¢ç»“æœ
 		set<char>::iterator transchar_iter;
 		for (transchar_iter = nfa.transchar.begin(); transchar_iter != nfa.transchar.end(); transchar_iter++)
 		{
 			set<char> temp;
 			int flag = 0;
 
-			// ±éÀúËùÈ¡³ö¼¯ºÏÖĞµÄÃ¿Ò»¸öÔªËØ£¬ÇóÆä×ª»»½á¹ûµÄ¦Å-±Õ°ü£¬²¢ºÏ²¢µ½tempÖĞ
+			// éå†æ‰€å–å‡ºé›†åˆä¸­çš„æ¯ä¸€ä¸ªå…ƒç´ ï¼Œæ±‚å…¶è½¬æ¢ç»“æœçš„Îµ-é—­åŒ…ï¼Œå¹¶åˆå¹¶åˆ°tempä¸­
 			set<char>::iterator top_iter;
 			for (top_iter = top.begin(); top_iter != top.end(); top_iter++)
 			{
@@ -726,7 +726,7 @@ Matrix NFA2DFA(Matrix nfa)
 				temp.insert('$');
 			}
 			else {
-				// ±éÀúQ£¬¿´ÊÇ·ñÒÑÓĞÓëtempÏàÍ¬µÄ¼¯ºÏ£¬Ã»ÓĞÔò¼ÓÈëÕ»ÖĞ
+				// éå†Qï¼Œçœ‹æ˜¯å¦å·²æœ‰ä¸tempç›¸åŒçš„é›†åˆï¼Œæ²¡æœ‰åˆ™åŠ å…¥æ ˆä¸­
 				vector<set<char>>::iterator Q_iter;
 				for (Q_iter = Q.begin(); Q_iter != Q.end(); Q_iter++)
 				{
@@ -741,26 +741,26 @@ Matrix NFA2DFA(Matrix nfa)
 					Q.push_back(temp);
 				}
 			}
-			trans_edge.push(temp);		// ½«×ª»»½á¹û½ø¶ÓÁĞ
+			trans_edge.push(temp);		// å°†è½¬æ¢ç»“æœè¿›é˜Ÿåˆ—
 		}
 	}
 
-	#pragma region ÀûÓÃĞÂ½ÚµãÀ´¹¹ÔìDFA
+	#pragma region åˆ©ç”¨æ–°èŠ‚ç‚¹æ¥æ„é€ DFA
 
 	int i, j;
-	// ³õÊ¼»¯µãÊı¡¢±ßÊı¡¢×ª»»×Ö·û¼¯
+	// åˆå§‹åŒ–ç‚¹æ•°ã€è¾¹æ•°ã€è½¬æ¢å­—ç¬¦é›†
 	dfa.nodeCount = Q.size();
 	dfa.edgeCount = trans_edge.size();
 	dfa.transchar = nfa.transchar;
 
-	// ³õÊ¼»¯½ÚµãÃû³Æ
+	// åˆå§‹åŒ–èŠ‚ç‚¹åç§°
 	dfa.vertex = new char[dfa.nodeCount];
 	for (i = dfa.nodeCount - 1, j = 65; i >= 0; i--, j--)
 	{
 		dfa.vertex[i] = char(j + dfa.nodeCount - 1);
 	}
 
-	// ³õÊ¼»¯¶şÎ¬¾ØÕó
+	// åˆå§‹åŒ–äºŒç»´çŸ©é˜µ
 	dfa.transet = new string*[dfa.nodeCount];
 	for (i = 0; i < dfa.nodeCount; i++)
 	{
@@ -774,7 +774,7 @@ Matrix NFA2DFA(Matrix nfa)
 		}
 	}
 
-	// ´Ó¶ÓÁĞÖĞ¸ø¾ØÕó¸³Öµ
+	// ä»é˜Ÿåˆ—ä¸­ç»™çŸ©é˜µèµ‹å€¼
 	i = 0;
 	while (!trans_edge.empty())
 	{
@@ -805,12 +805,12 @@ Matrix NFA2DFA(Matrix nfa)
 		i++;
 	}
 
-	// ¿ªÊ¼½ÚµãÎªµÚÒ»¸ö½Úµã
+	// å¼€å§‹èŠ‚ç‚¹ä¸ºç¬¬ä¸€ä¸ªèŠ‚ç‚¹
 	node start;
 	start.Name = dfa.vertex[0];
 	dfa.StartNode = start;
 
-	// ¹¹ÔìÖÕÖ¹½Úµã¼¯
+	// æ„é€ ç»ˆæ­¢èŠ‚ç‚¹é›†
 	for (i = 0; i < Q.size(); i++)
 	{
 		set<char>::iterator temp_iter;
@@ -827,7 +827,7 @@ Matrix NFA2DFA(Matrix nfa)
 	return dfa;
 }
 	
-// ·µ»ØÒ»¸ö½Úµã¾­¹ı×ª»»×Ö·û×ª»»µÃµ½µÄ½á¹û£¨¦Å±Õ°ü½á¹û£©
+// è¿”å›ä¸€ä¸ªèŠ‚ç‚¹ç»è¿‡è½¬æ¢å­—ç¬¦è½¬æ¢å¾—åˆ°çš„ç»“æœï¼ˆÎµé—­åŒ…ç»“æœï¼‰
 set<char> transfer_result(Matrix nfa, char start, char transchar)
 {
 	set<char> result;
@@ -836,14 +836,14 @@ set<char> transfer_result(Matrix nfa, char start, char transchar)
 	{
 		if (nfa.transet[index][i].find(transchar)!=string::npos)
 		{
-			// ½«Æä¦Å-±Õ°ü¼ÓÈë½á¹û
+			// å°†å…¶Îµ-é—­åŒ…åŠ å…¥ç»“æœ
 			result = union_set(result, e_closure(nfa, nfa.vertex[i]));
 		}
 	}
 	return result;
 }
 
-// ·µ»ØÒ»¸ö½ÚµãµÄ¦Å±Õ°ü
+// è¿”å›ä¸€ä¸ªèŠ‚ç‚¹çš„Îµé—­åŒ…
 set<char> e_closure(Matrix nfa, char start_node)
 {
 	int index;
@@ -870,17 +870,17 @@ set<char> e_closure(Matrix nfa, char start_node)
 	return result;
 }
 
-// ½«Á½¸ö¼¯ºÏºÏ²¢
+// å°†ä¸¤ä¸ªé›†åˆåˆå¹¶
 set<char> union_set(set<char>s1, set<char>s2)
 {
 	s1.insert(s2.begin(), s2.end());
 	return s1;
 }
 
-// ÅĞ¶ÏÁ½¸ö¼¯ºÏÊÇ·ñÏàÍ¬
+// åˆ¤æ–­ä¸¤ä¸ªé›†åˆæ˜¯å¦ç›¸åŒ
 bool equal_set(set<char> s1, set<char> s2)
 {
-	// ´óĞ¡²»Ò»ÑùµÄ¼¯ºÏ±ØÈ»²»Í¬
+	// å¤§å°ä¸ä¸€æ ·çš„é›†åˆå¿…ç„¶ä¸åŒ
 	if (s1.size() != s2.size())
 	{
 		return false;
@@ -901,19 +901,19 @@ bool equal_set(set<char> s1, set<char> s2)
 
 #pragma endregion
 
-#pragma region DFA×îĞ¡»¯
+#pragma region DFAæœ€å°åŒ–
 
 Matrix DFA_minimize(Matrix dfa)
 {
 	vector<set<char>> groups;
 
-	// ³õÊ¼»¯groups,·Ö³ÉÖÕÖ¹¼¯ºÍ·ÇÖÕÖ¹¼¯
+	// åˆå§‹åŒ–groups,åˆ†æˆç»ˆæ­¢é›†å’Œéç»ˆæ­¢é›†
 	groups = init_groups(dfa);
 
-	// Ñ­»·½øĞĞ·Ö×é
+	// å¾ªç¯è¿›è¡Œåˆ†ç»„
 	groups = grouping(dfa, groups);
 
-	// groupsÖĞ»ñµÃÁËĞÂ½ÚµãÊı£¬ÏÈ³õÊ¼»¯dfa_minµÄ½ÚµãĞÅÏ¢
+	// groupsä¸­è·å¾—äº†æ–°èŠ‚ç‚¹æ•°ï¼Œå…ˆåˆå§‹åŒ–dfa_minçš„èŠ‚ç‚¹ä¿¡æ¯
 	int i, j;
 	Matrix dfa_min;
 	dfa_min.nodeCount = groups.size();
@@ -944,7 +944,7 @@ Matrix DFA_minimize(Matrix dfa)
 		}
 	}
 
-	// ³õÊ¼»¯±ß¼¯
+	// åˆå§‹åŒ–è¾¹é›†
 	dfa_min.transet = new string * [dfa_min.nodeCount];
 	for (i = 0; i < dfa_min.nodeCount; i++)
 	{
@@ -958,7 +958,7 @@ Matrix DFA_minimize(Matrix dfa)
 		}
 	}
 
-	// ÇóĞÂµÄ±ß¼¯
+	// æ±‚æ–°çš„è¾¹é›†
 	set<char>::iterator trans_iter;
 	for (i = 0; i < groups.size(); i++)
 	{
@@ -992,12 +992,12 @@ Matrix DFA_minimize(Matrix dfa)
 	return dfa_min;
 }
 
-// ³õÊ¼»¯Ò»¸ö½«½Úµã·ÖÎª¡°ÖÕ½á¼¯¡±ºÍ¡°·ÇÖÕ½á¼¯¡±µÄÈİÆ÷
+// åˆå§‹åŒ–ä¸€ä¸ªå°†èŠ‚ç‚¹åˆ†ä¸ºâ€œç»ˆç»“é›†â€å’Œâ€œéç»ˆç»“é›†â€çš„å®¹å™¨
 vector<set<char>> init_groups(Matrix dfa)
 {
 	vector<set<char>> groups;
 	
-	// Ê×ÏÈ»®·Ö³öÖÕ½á¼¯
+	// é¦–å…ˆåˆ’åˆ†å‡ºç»ˆç»“é›†
 	set<char> endgroup;
 	vector<node>::iterator endnode_iter;
 	for (endnode_iter = dfa.EndNodeSet.begin(); endnode_iter != dfa.EndNodeSet.end(); endnode_iter++)
@@ -1006,7 +1006,7 @@ vector<set<char>> init_groups(Matrix dfa)
 	}
 	groups.push_back(endgroup);
 
-	// È»ºó»®·Ö³ö·ÇÖÕ½á¼¯
+	// ç„¶ååˆ’åˆ†å‡ºéç»ˆç»“é›†
 	set<char> not_endgroup;
 	int i;
 	for (i = 0; i < dfa.nodeCount; i++)
@@ -1016,7 +1016,7 @@ vector<set<char>> init_groups(Matrix dfa)
 			not_endgroup.insert(dfa.vertex[i]);
 		}
 	}
-	if (not_endgroup.size() != 0)		// ÓĞ¿ÉÄÜËùÓĞ½Úµã¶¼ÊÇÖÕÖ¹½áµã£¬ËùÒÔ½öµ±·ÇÖÕ½á¼¯²»Îª¿ÕÊ±¼ÓÈë
+	if (not_endgroup.size() != 0)		// æœ‰å¯èƒ½æ‰€æœ‰èŠ‚ç‚¹éƒ½æ˜¯ç»ˆæ­¢ç»“ç‚¹ï¼Œæ‰€ä»¥ä»…å½“éç»ˆç»“é›†ä¸ä¸ºç©ºæ—¶åŠ å…¥
 	{
 		groups.push_back(not_endgroup);
 	}
@@ -1024,33 +1024,33 @@ vector<set<char>> init_groups(Matrix dfa)
 	return groups;
 }
 
-// ´Ó¡°ÖÕ½á¼¯¡±ºÍ¡°·ÇÖÕ½á¼¯¡±¿ªÊ¼£¬½øĞĞ·Ö×é
+// ä»â€œç»ˆç»“é›†â€å’Œâ€œéç»ˆç»“é›†â€å¼€å§‹ï¼Œè¿›è¡Œåˆ†ç»„
 vector<set<char>> grouping(Matrix dfa, vector<set<char>> groups)
 {
-	// Èç¹ûËùÓĞ½Úµã¶¼ÊÇÖÕÖ¹½áµãÄÇ¾Í²»ĞèÒª×ö·Ö×é£¬·ñÔò½øĞĞÑ­»··Ö×é 
+	// å¦‚æœæ‰€æœ‰èŠ‚ç‚¹éƒ½æ˜¯ç»ˆæ­¢ç»“ç‚¹é‚£å°±ä¸éœ€è¦åšåˆ†ç»„ï¼Œå¦åˆ™è¿›è¡Œå¾ªç¯åˆ†ç»„ 
 	int i, j, k, m;
 	if (groups.size() != 1)
 	{
-		int c = groups.size(), p = 0;	// ¼ÆÊıÆ÷£¬µ±groupsÖĞ²»ÔÙ¼ÓÈëĞÂ×éÊ±(c==p)Ñ­»·½áÊø
+		int c = groups.size(), p = 0;	// è®¡æ•°å™¨ï¼Œå½“groupsä¸­ä¸å†åŠ å…¥æ–°ç»„æ—¶(c==p)å¾ªç¯ç»“æŸ
 		while (c != p)
 		{
 			p = c;
-			int flag = 0;	// ·Ö×é±êÖ¾£¬0±íÊ¾²»ĞèÒª·Ö×é£¬1±íÊ¾ĞèÒª
+			int flag = 0;	// åˆ†ç»„æ ‡å¿—ï¼Œ0è¡¨ç¤ºä¸éœ€è¦åˆ†ç»„ï¼Œ1è¡¨ç¤ºéœ€è¦
 
-			// ¶ÔgroupsÖĞÃ¿¸ö¼¯ºÏ£¬¼ì²éÊÇ·ñĞèÒª·Ö×é
+			// å¯¹groupsä¸­æ¯ä¸ªé›†åˆï¼Œæ£€æŸ¥æ˜¯å¦éœ€è¦åˆ†ç»„
 			for (i = 0; i < groups.size(); i++)
 			{
-				// ¶ÔÃ¿¸ö×ª»»×Ö·û£¬Çó×ª»»½á¹û£¬¼ì²éÊÇ·ñĞèÒª·Ö×é
+				// å¯¹æ¯ä¸ªè½¬æ¢å­—ç¬¦ï¼Œæ±‚è½¬æ¢ç»“æœï¼Œæ£€æŸ¥æ˜¯å¦éœ€è¦åˆ†ç»„
 				set<char>::iterator transchar_iter;
 				for (transchar_iter = dfa.transchar.begin(); transchar_iter != dfa.transchar.end(); transchar_iter++)
 				{
-					// Çó×ª»»½á¹û
+					// æ±‚è½¬æ¢ç»“æœ
 					vector<char> trans_result;
 					set<char>::iterator set_iter;
 					for (set_iter = groups[i].begin(); set_iter != groups[i].end(); set_iter++)
 					{
-						// ÓÉÓÚdfaÖĞ½Úµã¾­¹ıÒ»¸ö×ª»»×Ö·ûÖ»ÄÜµ½Ò»¸öÖÕµã£¬Òò´ËÖ±½ÓÈ¡begin()¼´¿É
-						// ²»¹ı»¹Òª¿¼ÂÇ¿Õ¼¯µÄÎÊÌâ
+						// ç”±äºdfaä¸­èŠ‚ç‚¹ç»è¿‡ä¸€ä¸ªè½¬æ¢å­—ç¬¦åªèƒ½åˆ°ä¸€ä¸ªç»ˆç‚¹ï¼Œå› æ­¤ç›´æ¥å–begin()å³å¯
+						// ä¸è¿‡è¿˜è¦è€ƒè™‘ç©ºé›†çš„é—®é¢˜
 						set<char> temp = transfer_result(dfa, *set_iter, *transchar_iter);
 						if (temp.size() == 0)
 						{
@@ -1059,7 +1059,7 @@ vector<set<char>> grouping(Matrix dfa, vector<set<char>> groups)
 						trans_result.push_back(*(temp.begin()));
 					}
 
-					// ¼ì²éÊÇ·ñĞèÒª·Ö×é
+					// æ£€æŸ¥æ˜¯å¦éœ€è¦åˆ†ç»„
 					vector<int> grouping;
 					for (j = 0; j < trans_result.size(); j++)
 					{
@@ -1080,7 +1080,7 @@ vector<set<char>> grouping(Matrix dfa, vector<set<char>> groups)
 						}
 					}
 
-					// Èç¹ûÀ´×Ô²»Ö¹Ò»¸ö×é£¬ÔòĞèÒª·Ö×é
+					// å¦‚æœæ¥è‡ªä¸æ­¢ä¸€ä¸ªç»„ï¼Œåˆ™éœ€è¦åˆ†ç»„
 					set<int> group_num(grouping.begin(), grouping.end());
 					if (group_num.size() != 1)
 					{
@@ -1117,7 +1117,7 @@ vector<set<char>> grouping(Matrix dfa, vector<set<char>> groups)
 	return groups;
 }
 
-// ÅĞ¶Ïs2ÊÇ·ñÊÇs1×Ó¼¯
+// åˆ¤æ–­s2æ˜¯å¦æ˜¯s1å­é›†
 bool sub_set(set<char> s1, set<char> s2)
 {
 	if (s2.size() > s1.size())
