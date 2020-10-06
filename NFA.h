@@ -40,7 +40,7 @@ struct Matrix
 {
 	char* vertex;			// 节点名称，其大小为vertex[nodeCount]
 	set<char> transchar;	// 转换函数名称集 (a,b,c...)
-	char** transet;			// 转换矩阵，其大小为transet[nodeCount][nodeCount]
+	string** transet;			// 转换矩阵，其大小为transet[nodeCount][nodeCount]
 	int edgeCount;			// 边数统计
 	int nodeCount;			// 节点统计
 	node StartNode;			// 开始节点

@@ -14,23 +14,24 @@ int main()
 	NFA_cell = regex_to_nfa(postfix_regex);
 	// cout << NFA_cell;
 
-	Matrix nfa_m;
-	nfa_m = cell2matrix(NFA_cell);
-	// cout << nfa_m << endl << endl;
+	Matrix nfa;
+	nfa = cell2matrix(NFA_cell);
+	// cout << nfa << endl << endl;
 	#pragma endregion
 	
 	#pragma region NFA转DFA
 	
-	Matrix dfa_m;
-	dfa_m = NFA2DFA(nfa_m);
-	cout << dfa_m;
+	Matrix dfa;
+	dfa = NFA2DFA(nfa);
+	// cout << dfa;
 	
 	#pragma endregion
 
 	#pragma region DFA最小化
 
-
-
+	Matrix dfa_m;
+	dfa_m = DFA_minimize(dfa);
+	cout << dfa_m << endl;
 	#pragma endregion
 
 

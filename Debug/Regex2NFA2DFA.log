@@ -3,8 +3,13 @@ D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(43,16): 
 D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(87,16): warning C4018: “<”: 有符号/无符号不匹配
 D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(163,16): warning C4018: “<”: 有符号/无符号不匹配
 D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(285,16): warning C4018: “<”: 有符号/无符号不匹配
-D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(786,19): warning C4018: “<”: 有符号/无符号不匹配
-D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(806,16): warning C4018: “<”: 有符号/无符号不匹配
-  main.cpp
-  正在生成代码...
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(674,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(791,19): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(814,16): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(929,16): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(963,16): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(975,19): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(1041,18): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(1064,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Regex2NFA2DFA.cpp(1072,22): warning C4018: “<”: 有符号/无符号不匹配
   Regex2NFA2DFA.vcxproj -> D:\Study\Programming\Compiler Principle\Regex2NFA2DFA\Debug\Regex2NFA2DFA.exe

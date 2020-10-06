@@ -549,10 +549,10 @@ Matrix cell2matrix(cell nfa_cell)
 	}
 
 	// 初始化二维矩阵
-	matrix.transet = new char* [matrix.nodeCount];
+	matrix.transet = new string* [matrix.nodeCount];
 	for (i = 0; i < matrix.nodeCount; i++)
 	{
-		matrix.transet[i] = new char[matrix.nodeCount];
+		matrix.transet[i] = new string[matrix.nodeCount];
 	}
 	for (i = 0; i < matrix.nodeCount; i++)
 	{
@@ -572,7 +572,11 @@ Matrix cell2matrix(cell nfa_cell)
 		end = find_index_in_vertex(matrix, nfa_cell.EdgeSet[i].End.Name);
 		if (start != -1 && end != -1)
 		{
-			matrix.transet[start][end] = nfa_cell.EdgeSet[i].transchar;
+			if (matrix.transet[start][end] == "$")
+			{
+				matrix.transet[start][end] = "";
+			}
+			matrix.transet[start][end] += nfa_cell.EdgeSet[i].transchar;
 			matrix.edgeCount++;
 		}
 		else
@@ -631,7 +635,7 @@ ostream& operator<<(ostream& out, const Matrix& nfa)
 		out << nfa.vertex[i] << " ";
 		for (j = 0; j < nfa.nodeCount; j++)
 		{
-			if (nfa.transet[i][j] == '$')
+			if (nfa.transet[i][j] == "$")
 			{
 				out << "-" << " ";
 			}
@@ -665,14 +669,17 @@ cell matrix2cell(Matrix nfa)
 	{
 		for (j = 0; j < nfa.nodeCount; j++)
 		{
-			if (nfa.transet[i][j] != '$')
+			if (nfa.transet[i][j] != "$")
 			{
-				edge newEdge;
-				newEdge.Start.Name = nfa.vertex[i];
-				newEdge.End.Name = nfa.vertex[j];
-				newEdge.transchar = nfa.transet[i][j];
+				for (int m = 0; m < nfa.transet[i][j].size(); m++)
+				{
+					edge newEdge;
+					newEdge.Start.Name = nfa.vertex[i];
+					newEdge.End.Name = nfa.vertex[j];
+					newEdge.transchar = nfa.transet[i][j][m];
 
-				newCell.EdgeSet[newCell.EdgeCount++] = newEdge;
+					newCell.EdgeSet[newCell.EdgeCount++] = newEdge;
+				}
 			}
 		}
 	}
@@ -699,7 +706,6 @@ Matrix NFA2DFA(Matrix nfa)
 	{
 		set<char> top = s.front();		// 取出队首集合
 		s.pop();
-		// Q.push_back(top);			// 将取出的集合加入Q
 
 		// 对每一个转换字符，求转换结果
 		set<char>::iterator transchar_iter;
@@ -739,7 +745,8 @@ Matrix NFA2DFA(Matrix nfa)
 		}
 	}
 
-	// 下面开始利用新节点来构造DFA
+	#pragma region 利用新节点来构造DFA
+
 	int i, j;
 	// 初始化点数、边数、转换字符集
 	dfa.nodeCount = Q.size();
@@ -754,10 +761,10 @@ Matrix NFA2DFA(Matrix nfa)
 	}
 
 	// 初始化二维矩阵
-	dfa.transet = new char*[dfa.nodeCount];
+	dfa.transet = new string*[dfa.nodeCount];
 	for (i = 0; i < dfa.nodeCount; i++)
 	{
-		dfa.transet[i] = new char[dfa.nodeCount];
+		dfa.transet[i] = new string[dfa.nodeCount];
 	}
 	for (i = 0; i < dfa.nodeCount; i++)
 	{
@@ -768,21 +775,19 @@ Matrix NFA2DFA(Matrix nfa)
 	}
 
 	// 从队列中给矩阵赋值
-	int Q_index = 0;
 	i = 0;
 	while (!trans_edge.empty())
 	{
 		set<char>::iterator trans_iter;
 		for (trans_iter = dfa.transchar.begin(); trans_iter != dfa.transchar.end(); trans_iter++)
 		{
-			if (*trans_iter == '$')
+			set<char> temp = trans_edge.front();
+			trans_edge.pop();
+			if (temp.size() == 1 && *temp.begin() == '$')
 			{
-				break;
+				// do nothing
 			}
 			else {
-				set<char> temp = trans_edge.front();
-				trans_edge.pop();
-
 				for (j = 0; j < Q.size(); j++)
 				{
 					if (equal_set(temp, Q[j]))
@@ -790,8 +795,11 @@ Matrix NFA2DFA(Matrix nfa)
 						break;
 					}
 				}
-
-				dfa.transet[i][j] = *trans_iter;
+				if (dfa.transet[i][j] == "$")
+				{
+					dfa.transet[i][j] = "";
+				}
+				dfa.transet[i][j] += *trans_iter;
 			}
 		}
 		i++;
@@ -814,6 +822,7 @@ Matrix NFA2DFA(Matrix nfa)
 			dfa.EndNodeSet.push_back(end);
 		}
 	}
+	#pragma endregion
 
 	return dfa;
 }
@@ -825,7 +834,7 @@ set<char> transfer_result(Matrix nfa, char start, char transchar)
 	int index = find_index_in_vertex(nfa, start);
 	for (int i = 0; i < nfa.nodeCount; i++)
 	{
-		if (nfa.transet[index][i] == transchar)
+		if (nfa.transet[index][i].find(transchar)!=string::npos)
 		{
 			// 将其ε-闭包加入结果
 			result = union_set(result, e_closure(nfa, nfa.vertex[i]));
@@ -851,7 +860,7 @@ set<char> e_closure(Matrix nfa, char start_node)
 		index = find_index_in_vertex(nfa, ch);
 		for (int i = 0; i < nfa.nodeCount; i++)
 		{
-			if (nfa.transet[index][i] == '#')
+			if (nfa.transet[index][i] == "#")
 			{
 				s.push(nfa.vertex[i]);
 			}
@@ -871,6 +880,12 @@ set<char> union_set(set<char>s1, set<char>s2)
 // 判断两个集合是否相同
 bool equal_set(set<char> s1, set<char> s2)
 {
+	// 大小不一样的集合必然不同
+	if (s1.size() != s2.size())
+	{
+		return false;
+	}
+
 	set<char> temp;
 	temp = union_set(s1, s2);
 	
@@ -890,7 +905,232 @@ bool equal_set(set<char> s1, set<char> s2)
 
 Matrix DFA_minimize(Matrix dfa)
 {
+	vector<set<char>> groups;
 
+	// 初始化groups,分成终止集和非终止集
+	groups = init_groups(dfa);
+
+	// 循环进行分组
+	groups = grouping(dfa, groups);
+
+	// groups中获得了新节点数，先初始化dfa_min的节点信息
+	int i, j;
+	Matrix dfa_min;
+	dfa_min.nodeCount = groups.size();
+	dfa_min.edgeCount = 0;
+	dfa_min.transchar = dfa.transchar;
+	dfa_min.vertex = new char[dfa_min.nodeCount];
+	for (i = dfa_min.nodeCount - 1, j = 65; i >= 0; i--, j--)
+	{
+		dfa_min.vertex[i] = char(j + dfa_min.nodeCount - 1);
+	}
+
+	vector<node>::iterator end_iter;
+	for (i = 0; i < groups.size(); i++)
+	{
+		if (groups[i].find(dfa.StartNode.Name) != groups[i].end())
+		{
+			dfa_min.StartNode.Name = dfa_min.vertex[i];
+		}
+		for (end_iter = dfa.EndNodeSet.begin(); end_iter != dfa.EndNodeSet.end(); end_iter++)
+		{
+			if (groups[i].find((*end_iter).Name) != groups[i].end())
+			{
+				node newEnd;
+				newEnd.Name = dfa_min.vertex[i];
+				dfa_min.EndNodeSet.push_back(newEnd);
+				break;
+			}
+		}
+	}
+
+	// 初始化边集
+	dfa_min.transet = new string * [dfa_min.nodeCount];
+	for (i = 0; i < dfa_min.nodeCount; i++)
+	{
+		dfa_min.transet[i] = new string[dfa_min.nodeCount];
+	}
+	for (i = 0; i < dfa_min.nodeCount; i++)
+	{
+		for (j = 0; j < dfa_min.nodeCount; j++)
+		{
+			dfa_min.transet[i][j] = "$";
+		}
+	}
+
+	// 求新的边集
+	set<char>::iterator trans_iter;
+	for (i = 0; i < groups.size(); i++)
+	{
+		for (trans_iter = dfa.transchar.begin(); trans_iter != dfa.transchar.end(); trans_iter++)
+		{
+			set<char> trans_result;
+			set<char>::iterator set_iter;
+			for (set_iter = groups[i].begin(); set_iter != groups[i].end(); set_iter++)
+			{
+				trans_result = union_set(trans_result,(transfer_result(dfa, *set_iter, *trans_iter)));
+			}
+			if (trans_result.size() != 0)
+			{
+				for (j = 0; j < groups.size(); j++)
+				{
+					if (sub_set(groups[j], trans_result))
+					{
+						break;
+					}
+				}
+				if (dfa_min.transet[i][j] == "$")
+				{
+					dfa_min.transet[i][j] = "";
+				}
+				dfa_min.transet[i][j] += *trans_iter;
+				dfa_min.edgeCount++;
+			}
+		}
+	}
+
+	return dfa_min;
 }
 
+// 初始化一个将节点分为“终结集”和“非终结集”的容器
+vector<set<char>> init_groups(Matrix dfa)
+{
+	vector<set<char>> groups;
+	
+	// 首先划分出终结集
+	set<char> endgroup;
+	vector<node>::iterator endnode_iter;
+	for (endnode_iter = dfa.EndNodeSet.begin(); endnode_iter != dfa.EndNodeSet.end(); endnode_iter++)
+	{
+		endgroup.insert((*endnode_iter).Name);
+	}
+	groups.push_back(endgroup);
+
+	// 然后划分出非终结集
+	set<char> not_endgroup;
+	int i;
+	for (i = 0; i < dfa.nodeCount; i++)
+	{
+		if (endgroup.find(dfa.vertex[i]) == endgroup.end())
+		{
+			not_endgroup.insert(dfa.vertex[i]);
+		}
+	}
+	if (not_endgroup.size() != 0)		// 有可能所有节点都是终止结点，所以仅当非终结集不为空时加入
+	{
+		groups.push_back(not_endgroup);
+	}
+
+	return groups;
+}
+
+// 从“终结集”和“非终结集”开始，进行分组
+vector<set<char>> grouping(Matrix dfa, vector<set<char>> groups)
+{
+	// 如果所有节点都是终止结点那就不需要做分组，否则进行循环分组 
+	int i, j, k, m;
+	if (groups.size() != 1)
+	{
+		int c = groups.size(), p = 0;	// 计数器，当groups中不再加入新组时(c==p)循环结束
+		while (c != p)
+		{
+			p = c;
+			int flag = 0;	// 分组标志，0表示不需要分组，1表示需要
+
+			// 对groups中每个集合，检查是否需要分组
+			for (i = 0; i < groups.size(); i++)
+			{
+				// 对每个转换字符，求转换结果，检查是否需要分组
+				set<char>::iterator transchar_iter;
+				for (transchar_iter = dfa.transchar.begin(); transchar_iter != dfa.transchar.end(); transchar_iter++)
+				{
+					// 求转换结果
+					vector<char> trans_result;
+					set<char>::iterator set_iter;
+					for (set_iter = groups[i].begin(); set_iter != groups[i].end(); set_iter++)
+					{
+						// 由于dfa中节点经过一个转换字符只能到一个终点，因此直接取begin()即可
+						// 不过还要考虑空集的问题
+						set<char> temp = transfer_result(dfa, *set_iter, *transchar_iter);
+						if (temp.size() == 0)
+						{
+							temp.insert('$');
+						}
+						trans_result.push_back(*(temp.begin()));
+					}
+
+					// 检查是否需要分组
+					vector<int> grouping;
+					for (j = 0; j < trans_result.size(); j++)
+					{
+						if (trans_result[j] == '$')
+						{
+							grouping.push_back(-1);
+						}
+						else
+						{
+							for (k = 0; k < groups.size(); k++)
+							{
+								if (groups[k].find(trans_result[j]) != groups[k].end())
+								{
+									grouping.push_back(k);
+									break;
+								}
+							}
+						}
+					}
+
+					// 如果来自不止一个组，则需要分组
+					set<int> group_num(grouping.begin(), grouping.end());
+					if (group_num.size() != 1)
+					{
+						flag = 1;
+
+						set<int>::iterator grouping_iter;
+						for (grouping_iter = group_num.begin(); grouping_iter != group_num.end(); grouping_iter++)
+						{
+							set<char> new_group;
+							set<char>::iterator set_iter;
+							for (set_iter = groups[i].begin(), m = 0; set_iter != groups[i].end(); set_iter++, m++)
+							{
+								if (grouping[m] == *grouping_iter)
+								{
+									new_group.insert(*set_iter);
+								}
+							}
+							groups.push_back(new_group);
+						}
+						
+						groups.erase(groups.begin() + i);
+						break;
+					}
+				}
+
+				if (flag == 1)
+				{
+					break;
+				}
+			}
+			c = groups.size();
+		}
+	}
+	return groups;
+}
+
+// 判断s2是否是s1子集
+bool sub_set(set<char> s1, set<char> s2)
+{
+	if (s2.size() > s1.size())
+		return false;
+	
+	set<char>::iterator set_iter;
+	for (set_iter = s2.begin(); set_iter != s2.end(); set_iter++)
+	{
+		if (s1.find(*set_iter) == s1.end())
+		{
+			return false;
+		}
+	}
+	return true;
+}
 #pragma endregion
