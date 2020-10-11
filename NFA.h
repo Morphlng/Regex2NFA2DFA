@@ -5,44 +5,44 @@
 using namespace std;
 
 /// <summary>
-/// ¸ÃÍ·ÎÄ¼ş°üº¬ÁËNFAÓëDFAµÄ½á¹¹Ìå¶¨Òå
+/// è¯¥å¤´æ–‡ä»¶åŒ…å«äº†NFAä¸DFAçš„ç»“æ„ä½“å®šä¹‰
 /// </summary>
 
 #define MAX 100
 
-// ½Úµã¶¨Òå
+// èŠ‚ç‚¹å®šä¹‰
 struct node
 {
 	char Name;
 };
 
-// ±ß¶¨Òå
+// è¾¹å®šä¹‰
 struct edge
 {
 	node Start;
 	node End;
-	char transchar;		// ×ª»»º¯Êı Start-transchar-End
+	char transchar;		// è½¬æ¢å‡½æ•° Start-transchar-End
 };
 
-// NFAÓëDFAµ¥Ôª¶¨Òå
-// ¸Ã½á¹¹ÌåÊÇNFAÕûÌåµÄ¶¨Òå£¬µ«Í¬Ê±Ò²ÓÃÓÚ¹¹Ôì¹ı³ÌÖĞµÄÁÙÊ±½áµã¹¹³É
+// NFAä¸DFAå•å…ƒå®šä¹‰
+// è¯¥ç»“æ„ä½“æ˜¯NFAæ•´ä½“çš„å®šä¹‰ï¼Œä½†åŒæ—¶ä¹Ÿç”¨äºæ„é€ è¿‡ç¨‹ä¸­çš„ä¸´æ—¶ç»“ç‚¹æ„æˆ
 struct cell
 {
-	edge EdgeSet[MAX];		// ±ß¼¯
-	int EdgeCount;			// ±ßÊı
-	set<char> transchar;	// ×ª»»º¯ÊıÃû³Æ¼¯ (a,b,c...)
-	node StartNode;			// ¿ªÊ¼½Úµã£¬Ä¬ÈÏÖ»ÓĞÒ»¸ö¿ªÊ¼½áµã
-	vector<node> EndNodeSet;	// ÖÕÖ¹½Úµã¼¯£¬¶ÔÓÚThompsonËã·¨Éú³ÉµÄNFAÖ»ÓĞÒ»¸öÖÕÖ¹½áµã£¬µ«ÊÇDFA»áÓĞ¶à¸ö
+	edge EdgeSet[MAX];		// è¾¹é›†
+	int EdgeCount;			// è¾¹æ•°
+	set<char> transchar;	// è½¬æ¢å‡½æ•°åç§°é›† (a,b,c...)
+	node StartNode;			// å¼€å§‹èŠ‚ç‚¹ï¼Œé»˜è®¤åªæœ‰ä¸€ä¸ªå¼€å§‹ç»“ç‚¹
+	vector<node> EndNodeSet;	// ç»ˆæ­¢èŠ‚ç‚¹é›†ï¼Œå¯¹äºThompsonç®—æ³•ç”Ÿæˆçš„NFAåªæœ‰ä¸€ä¸ªç»ˆæ­¢ç»“ç‚¹ï¼Œä½†æ˜¯DFAä¼šæœ‰å¤šä¸ª
 };
 
-// NFAÓëDFAµÄ¾ØÕó½á¹¹¶¨Òå
+// NFAä¸DFAçš„çŸ©é˜µç»“æ„å®šä¹‰
 struct Matrix
 {
-	char* vertex;			// ½ÚµãÃû³Æ£¬Æä´óĞ¡Îªvertex[nodeCount]
-	set<char> transchar;	// ×ª»»º¯ÊıÃû³Æ¼¯ (a,b,c...)
-	string** transet;			// ×ª»»¾ØÕó£¬Æä´óĞ¡Îªtranset[nodeCount][nodeCount]
-	int edgeCount;			// ±ßÊıÍ³¼Æ
-	int nodeCount;			// ½ÚµãÍ³¼Æ
-	node StartNode;			// ¿ªÊ¼½Úµã
-	vector<node> EndNodeSet;	// ÖÕÖ¹½Úµã¼¯
+	char* vertex;			// èŠ‚ç‚¹åç§°ï¼Œå…¶å¤§å°ä¸ºvertex[nodeCount]
+	set<char> transchar;	// è½¬æ¢å‡½æ•°åç§°é›† (a,b,c...)
+	string** transet;			// è½¬æ¢çŸ©é˜µï¼Œå…¶å¤§å°ä¸ºtranset[nodeCount][nodeCount]
+	int edgeCount;			// è¾¹æ•°ç»Ÿè®¡
+	int nodeCount;			// èŠ‚ç‚¹ç»Ÿè®¡
+	node StartNode;			// å¼€å§‹èŠ‚ç‚¹
+	vector<node> EndNodeSet;	// ç»ˆæ­¢èŠ‚ç‚¹é›†
 };
