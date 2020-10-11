@@ -2,7 +2,7 @@
 
 *Nie Zili*
 *Last Update*
-*10.4*
+*10.6*
 
 ## 一、正规式——NFA
 
@@ -131,7 +131,7 @@ void get_Q(Matrix nfa)
     queue<set<char>> s;             // 计算队列
     queue<set<char>> trans_edge;    // 新节点的转换终点集
 
-    Q.insert(e-closure(nfa.StartNode));     // 初始状态将开始节点的ε闭包加入Q与s
+    Q.push_back(e-closure(nfa.StartNode));     // 初始状态将开始节点的ε闭包加入Q与s
     s.push(e-closure(nfa.StartNode));
     
     while(!s.empty())
@@ -168,10 +168,88 @@ void get_Q(Matrix nfa)
 
 举个例子，如(a|b)*，运行第一部分生成NFA后获得一个以G为起点，H为终点的自动机，其ε-closure子集法的表格如下：
 
-|  | 'a'  | 'b'  |
+| (a\|b)* | 'a'  | 'b'  |
 | :---- | :--- | :--- |
 | {GEACH}   | {BFEACH}    | {DFEACH}    |
 | {BFEACH}   | {BFEACH}    | {DFEACH}     |
 | {DFEACH}   | {BFEACH}    | {DFEACH}     |
 
 构造该表过程中，Q、s、trans_edge的变化如图：
+
+## 三、DFA最小化
+
+### 3.1 思路
+
+最小化采用Hopcroft算法，即将集合不断划分，直至不再产生新集合为止，具体算法描述如下：
+
+```c++
+split(S)
+    foreach(character c)
+        if(c can split s)
+            split s into T1, ..., Tk
+
+hopcroft()
+    split all nodes into N, A
+    while(set is still changing)
+        split(s)
+```
+
+### 3.2 分组
+
+最小化的重点在于集合划分，初始状态，根据原始DFA中某节点是否属于终结节点，可以划分为"终结集"和"非终结集"。我们的目标是让属于同一个集合中的元素，经过某个转换字符后的转换结果集，都属于同一个集合，否则就将转换结果不属于同一个集合的元素拆分成新的集合，并将原本的集合删除。重复该操作直到不再产生新的集合。
+
+```c++
+while(has new set){
+    for s in all_set{
+        for ch in transchar{
+            // 求转换结果
+            vector<char> tran_result = transfer(s,ch);
+            // 获取上述结果所在集合下标集合
+            vector<int> tran_grouping = find_group(tran_result);
+            // 统计下标个数，从而知道是否需要分组
+            set<int> group_num(tran_grouping.begin(),tran_grouping.end());
+            // 如果分组数不为1，则需要分组
+            if(group_num.size()!=1):
+                // 标记，产生新分组！
+                has new set;
+
+                // 分组，加入all_set
+                for(i=0;i<group_num.size();i++){
+                    set<char> newGroup;
+                    for(j=0;j<s.size();j++){
+                        if(tran_grouping[j]==group_num[i]){
+                            newGroup.insert(s[j]);
+                        }
+                    }
+                    all_set.push_back(newGroup);
+                }
+
+                // 删除原本的s
+                all_set.erase(s);
+        }
+        if(has new set):
+            break;
+    }
+}
+```
+
+### 3.3 新的边集
+
+由于上述的分组在每次拆分后会从头进行检查，并且不时的要删除与添加新的集合，所以这里不能像ε-closure子集法那里一样，在求新的节点时顺便将边集保存，我们需要根据新的节点求新的边集。
+
+需要求取新的节点在原本的DFA中的转换结果集合，然后检查该结果属于哪一个新的节点的子集，从而获得新的边集。算法描述如下：
+
+```c++
+for s,i in all_set{
+    for ch in transchar{
+        set<char> trans_result = transfer(s,ch);
+        // 如果转换结果不为空，加入边集
+        if(trans_result.size()!=0)
+        {
+            // 找出转换结果属于哪一个集合的子集
+            j = sub_set(all_set,trans_result);
+            dfa.transet[i][j] += ch;
+        }
+    }
+}
+```
